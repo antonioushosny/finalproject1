@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Group;
 
 class HomeController extends Controller
 {
@@ -24,12 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        
-        // $product=array();
-            $products=Product::all();
-            //$lastproduct=Product::find(1);
-            // $product->products->get();
-            return view('welcome',['products'=>$products]);
+    
+            $products=Product::with('style')->with('colors')->get();
+            $groups =Group::with('categories')->get();
+            return view('welcome',compact('products','groups'));
            
     }
 

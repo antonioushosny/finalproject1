@@ -21,6 +21,8 @@ class ProductController extends Controller
     //
     public function index($categ_name,$group_name)
     {
+        $groups =Group::with('categories')->get();
+        
         /*if(!Auth::check()) 
 		{
             dd('done');
@@ -146,7 +148,7 @@ class ProductController extends Controller
         ->max('products.product_price');
         
         
-        return view('user.product.show', compact('categories','group_name','styles','brands','max_prices','colors',
+        return view('user.product.show', compact('groups','categories','group_name','styles','brands','max_prices','colors',
     'materials','sizes','products','categ_name'));
        /* return view('user.product.show',['categories'=>$categories,'group_name'=>$group_name,'styles'=>$styles,
         'brands'=>$brands,'materials'=>$materials,'sizes'=>$sizes]);*/

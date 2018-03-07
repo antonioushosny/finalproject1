@@ -18,6 +18,6 @@ class Color extends Model
     }
     public function sizes()
     {
-        return $this->belongsToMany('App\sizes','product_color_sizes','product_colors_id','size_id');
+        return $this->belongsToMany('App\Size','product_color_sizes','product_colors_id','size_id');
     }
 }

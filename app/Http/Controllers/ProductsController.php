@@ -38,39 +38,12 @@ class ProductsController extends Controller
 // }])->get();
 
 
-        $products= Product::with('style')->get();
-        // dd($products);
-        // $products=DB::table('products')
-        //     ->join('styles','styles.id','=','products.style_id')
-        //    ->join('categories','categories.id','=','styles.categ_id')
-        //    ->join('categ_groups','categories.id','=','categ_groups.categ_id')
-        //    ->join('groups','groups.id','=','categ_groups.group_id')
-        //    ->select('products.*','styles.*','categories.*','groups.*')
-        //    ->where('categories.categ_name', '=', $categ_name)->get();
-
-        // dd($products);
-        
-        
+        $products= Product::with('style')->get();        
         $groups =Group::with('categories')->get();
-     
-    //    $products= DB::table('materials')
-    //    ->join('products','products.mater_id','=','materials.id')
-    //    ->join('styles','styles.id','=','products.style_id')
-    //    ->join('categories','categories.id','=','styles.categ_id')
-    //    ->join('categ_groups','categories.id','=','categ_groups.categ_id')
-    //    ->join('groups','groups.id','=','categ_groups.group_id')
-    //    ->select('products.product_serial_num AS serial','products.product_desc AS desc',
-    //    'products.product_price AS price','products.product_price_sale AS sale',
-    //    'styles.style_name AS style','products.id','products.updated_at AS update','materials.mater_name AS material')
-    
-       
-        
-    // //    ->get();
-    //  dd($products);
+
         return view('seller.showProducts',compact('groups','products','categ_name','group_name',
         'styles','materials'));
         
-        //return view('test',compact('pro'));
     }
 
     /**
@@ -231,10 +204,10 @@ class ProductsController extends Controller
        
         // dd($products);
         
-        $product= Product::with('style')->where('id',$id)->get();
-        
+        $product= Product::with('style')->with('colors')->where('id',$id)->get();
+    // dd($product[0]);
         $style_details= Product::with('styleDetails')->where('id',$id)->get();
-        dd($style_details);
+        
         $materials=Material::all();
  
         $styles=DB::table('styles')
@@ -286,6 +259,41 @@ class ProductsController extends Controller
             $product = Product::findOrFail($id);
             $product->update($request->all());
             return 'success';
+
+            $product = Product::findOrFail($id);
+            $product->style_id = $request->style_id;
+            $product->product_price = $request->product_price;
+            $product->product_serial_num = $request->product_serial_num;
+            $product->product_desc = $request->product_desc;
+            if($request->has('tag_word')){
+            $product->tag_word = $request->tag_word;
+            }
+            if($request->has('product_price_sale'))
+            {
+            $product->product_price_sale = $request->product_price_sale;
+            }
+            $product->mater_id = $request->mater_id;
+            $product->comp_id = $request->comp_id;  
+            $product->save();
+
+
+        if($request->hasFile('product_image')){
+            foreach ($request->file('product_image') as $key => $value) {
+
+                $imageName = time(). $key . '.' . $value->getClientOriginalExtension();
+                $value->move(public_path('images'), $imageName);
+                $media =new Media();
+                $media->img_name = $imageName;
+                $media->media_id = $product->id;
+                $media->media_type = 'App\Product';
+                $media->save();
+    
+            }
+        }
+            
+            // return response()->json($product);
+
+ return Redirect::back();
 
     }
   

@@ -14,6 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });*/
+
+Route::get('test/{id}', function ($id) {
+    return view('test',compact('id'));
+})->name('test');
 /*
 Auth::routes();
 */
@@ -41,6 +45,7 @@ Route::group(['middleware' => ['seller'],'prefix'=>'seller'], function () {
     Route::get ('/addproduct/{categ_name}/{group_name}',['uses' => 'ProductsController@create','as' => 'addproduct']);
     Route::post ('/showproduct/products',['uses'=>'ProductsController@store','as'=>'products']);
     Route::get ('/editproduct/{id}/{categ_name}/{group_name}',['uses'=>'ProductsController@edit','as'=>'editproduct']);
+    Route::post ('/updateproduct/{id}',['uses'=>'ProductsController@update','as'=>'updateproduct']);
 });
 
 //////////////////////  Cart

@@ -139,7 +139,7 @@
                             <!-- hereeeee -->
                             <span></span><a href="{{route('shoppingcart')}}" >Shoping Cart</a>
                                 <span class="badge">{{ Session::has('cartt') ? Session::get('cartt')->totalQty : '' }}</span>
-                               
+                               <br><span class="fa fa-cart-plus"></span>
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -167,70 +167,58 @@
                            <span class="icon-bar"></span> 
                          </button>
                         
+{{--  @foreach($groups as $group)
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-pie-chart"></i>
+              <span>{{$group->group_name}}</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+            @foreach($group->categories as $category )
+              <li><a href="{{ route('showproduct',array('categ_name'=>$category->categ_name,'group_name'=>$group->group_name)) }}"><i class="fa fa-circle-o"></i> {{$category->categ_name}}</a></li>
+            @endforeach
+            </ul>
+          </li>
+        @endforeach  --}}
+
                        </div>
                        <div class="collapse navbar-collapse" id="myNavbar">
                          <ul class="nav navbar-nav">
-                             <li><a href="#">Home</a></li>
+                             <li><a href="{{ route('product') }}">Home</a></li>
                              <li id="wm">
                                  <a href="#">Women
                                      <div id="showwomen" style="width:600%;background-color:#575757; display:none; position:absolute;z-index:1 ;opacity:0.9;margin-left:17%;margin-top:-2%;">
                                          <div class="row">
+                                            @foreach ($groups[1]->categories->chunk(6) as $key => $category)
                                              <div class="col-md-6">
                                                  <ul id="submenu">
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Dresses','group_name'=>'Woman')) }}">Dresses</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Tops & T-Shirts','group_name'=>'Woman')) }}">Tops &amp; T-Shirts</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Shirts & Blouses','group_name'=>'Woman')) }}">Shirts &amp; Blouses</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Skirts','group_name'=>'Woman')) }}">Skirts</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Trousers & Shorts','group_name'=>'Woman')) }}">Trousers &amp; Shorts</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Leggings & Hosiery','group_name'=>'Woman')) }}">Leggings &amp; Hosiery</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Playsuits & Jumpsuits','group_name'=>'Woman')) }}">Playsuits &amp; Jumpsuits </a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Jeans','group_name'=>'Woman')) }}">Jeans</a></li>
-                                                 </ul>
+                                                @foreach ($category as $categ)
+                                                    <li><a href="{{ route('show',array('categ_name'=>$categ->categ_name,'group_name'=>$groups[1]->group_name)) }}">{{$categ->categ_name}}</a></li>
+                                                @endforeach
+                                                </ul>
                                              </div>
-                                             <div class="col-md-6">
-                                                 <ul>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Sportswear & Joggers','group_name'=>'Woman')) }}">Sportswear &amp; Joggers </a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Swim & Beachwear','group_name'=>'Woman')) }}">Swim &amp; Beachwear </a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Blazer & Jackets','group_name'=>'Woman')) }}">Blazer &amp; Jackets </a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Knitwear','group_name'=>'Woman')) }}">Knitwear</a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Onesies & Nightwear','group_name'=>'Woman')) }}">Onesies &amp; Nightwear</a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Lingerie','group_name'=>'Woman')) }}">Lingerie </a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Suit','group_name'=>'Woman')) }}">Suit</a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Sale','group_name'=>'Woman')) }}">Sale</a></li>
-                                                 </ul>
-                                             </div>  
+                                            @endforeach
                                          </div>
                                      </div>        
                                  </a>
                              </li>
+                             
                              <li id="mn">
                                 <a href="#">Men
                                     <div id="showman" style="width:600%;background-color:#575757; display:none; position:absolute;z-index:1 ;opacity:0.9;margin-left:17%;margin-top:-2%;">
                                          <div class="row">
+                                            @foreach ($groups[0]->categories->chunk(6) as $key => $category)                                         
                                              <div class="col-md-6">
                                                  <ul id="submenu">
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Dresses','group_name'=>'Woman')) }}">Dresses</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Tops & T-Shirts','group_name'=>'Woman')) }}">Tops &amp; T-Shirts</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Shirts & Blouses','group_name'=>'Woman')) }}">Shirts &amp; Blouses</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Skirts','group_name'=>'Woman')) }}">Skirts</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Trousers & Shorts','group_name'=>'Woman')) }}">Trousers &amp; Shorts</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Leggings & Hosiery','group_name'=>'Woman')) }}">Leggings &amp; Hosiery</a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Playsuits & Jumpsuits','group_name'=>'Woman')) }}">Playsuits &amp; Jumpsuits </a></li>
-                                                    <li><a href="{{ route('show',array('categ_name'=>'Jeans','group_name'=>'Woman')) }}">Jeans</a></li>
+                                                @foreach ($category as $categ)
+                                                    <li><a href="{{ route('show',array('categ_name'=>$categ->categ_name,'group_name'=>$groups[0]->group_name)) }}">{{$categ->categ_name}}</a></li>
+                                                @endforeach
                                                  </ul>
                                              </div>
-                                             <div class="col-md-6">
-                                                 <ul>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Sportswear & Joggers','group_name'=>'Woman')) }}">Sportswear &amp; Joggers </a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Swim & Beachwear','group_name'=>'Woman')) }}">Swim &amp; Beachwear </a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Blazer & Jackets','group_name'=>'Woman')) }}">Blazer &amp; Jackets </a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Knitwear','group_name'=>'Woman')) }}">Knitwear</a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Onesies & Nightwear','group_name'=>'Woman')) }}">Onesies &amp; Nightwear</a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Lingerie','group_name'=>'Woman')) }}">Lingerie </a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Suit','group_name'=>'Woman')) }}">Suit</a></li>
-                                                     <li><a href="{{ route('show',array('categ_name'=>'Sale','group_name'=>'Woman')) }}">Sale</a></li>
-                                                 </ul>
-                                             </div>  
+                                             @endforeach
                                          </div>
                                      </div>
                                 </a>

@@ -10,21 +10,13 @@
 </style>
 @endsection
 @section('content')
-
+<div id="messages"></di>
 <h1 class="text-center">Add Product:</h1>
-<form  action="{{ route('storeproduct') }}" enctype="multipart/form-data" method="POST" class="form-horizontal" onkeypress="return event.keyCode != 13;">
+<form  action="{{ route('storeproduct') }}" id="add-form" enctype="multipart/form-data" method="POST" class="form-horizontal" onkeypress="return event.keyCode != 13;">
   
   {{ csrf_field() }}
 
-   {{--  @foreach($items as $item)
-      <h1> {{$item->product_serial_num}}</h1>
-        @foreach($item->colors as $color)
-          <div style="background-color:{{$color->color_name}}; width:10%"> {{$color->color_name}}</div>
-          @foreach($color->sizes as $size)
-            <span style="background-color:{{$color->color_name}}; color:white"> {{$size->size_name}}</span>
-          @endforeach
-        @endforeach                    
-  @endforeach  --}}
+  
  
 <input type="hidden" value="{{Auth::guard('seller')->user()->id}}" name="comp_id">
   <div class="row">
@@ -266,6 +258,22 @@
 
 
 <script>
+
+$("#add-form").submit(function(){
+    formulario =  $("#add-form");
+      url =  "http:://MyDomin/sendContacto";
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: formulario.serialize()
+        })
+        .done(function( response ) {
+            msg = ' <div class="alert alert-success" role="alert">'+arrMsgs[lang]["message_send"]+'</div>';
+            $("#messages").append(msg);
+        });
+})
+
+
 {{--  $('form').ajaxForm(function() 
 
    {
