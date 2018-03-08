@@ -1,7 +1,62 @@
 @extends('layouts.index')
 
 @section('content')
-
+<style type="text/css">
+/* carousel */
+.media-carousel 
+{
+  margin-bottom: 0;
+  padding: 0 40px 30px 40px;
+  margin-top: 30px;
+}
+/* Previous button  */
+.media-carousel .carousel-control.left 
+{
+  left: -12px;
+  background-image: none;
+  background: none repeat scroll 0 0 #222222;
+  border: 4px solid #FFFFFF;
+  border-radius: 23px 23px 23px 23px;
+  height: 40px;
+  width : 40px;
+  margin-top: 30px
+}
+/* Next button  */
+.media-carousel .carousel-control.right 
+{
+  right: -12px !important;
+  background-image: none;
+  background: none repeat scroll 0 0 #222222;
+  border: 4px solid #FFFFFF;
+  border-radius: 23px 23px 23px 23px;
+  height: 40px;
+  width : 40px;
+  margin-top: 30px
+}
+/* Changes the position of the indicators */
+.media-carousel .carousel-indicators 
+{
+  right: 50%;
+  top: auto;
+  bottom: 0px;
+  margin-right: -19px;
+}
+/* Changes the colour of the indicators */
+.media-carousel .carousel-indicators li 
+{
+  background: #c0c0c0;
+}
+.media-carousel .carousel-indicators .active 
+{
+  background: #333333;
+}
+.media-carousel img
+{
+  width: 250px;
+  height: 100px
+}
+/* End carousel */
+</style>
 <!-- start slider image for advertise-->
 <div class="container">
         <div id="first-slider">
@@ -91,39 +146,41 @@
                     <div class="item{{ $key == 0 ? ' active' : '' }}">
                         <div class="row">
                             @foreach ($productchunk as $product)
-                            <div class="col-md-3 col-sm-3 col-xs-12">
-                                <div class="slider-item">
-                                    <div class="slider-image">
-                                        <img src="{{asset('img/main-banner1.jpg')}}" class="img-responsive" alt="a" />
-                                    </div>
-                                    <div class="slider-main-detail">
-                                        <div class="slider-detail">
-                                            <div class="product-detail">
-                                                <h5>{{ $product->id }}</h5>
-                                                <h5 class="detail-price">$187.87</h5>
-                                            </div>
-                                        </div>
-                                        <div class="cart-section">
-                                            <div class="row">
-                                                <div class="col-md-6 col-sm-12 col-xs-6 review">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                </div>
-                                                <div class="col-md-6 col-sm-12 col-xs-6">
-                                                        {{--  <input type="hidden" name='productid' value={{$product->id}}>
-                                                        <input type="hidden" name='qty' value={{$product->product_price}}>
-                                                      <a href="{{route('addtocartt',['id'=>$product->id])}}">add</a>  --}}
-                                                      
-                                                    <a href="{{route('addtocartt',['id'=>$product->id])}}" class="AddCart btn btn-info"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To Cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="slider-item">
+                    <div class="slider-image" style="width:100%;height:100%">
+                        <img  src="{{asset('images/'.$product->images->toArray()[0]['img_name'])}}" class="img-responsive" alt="a" />
+                        <div class="middle">
+                            <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#Quikviewmodal-{{ $product->id }}" data-id="{{ $product->id }}">Quik Show</button>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="slider-main-detail">
+                        <div class="slider-detail">
+                            <div class="product-detail">
+                                <h5>styel:{{ $product->style->style_name }}</h5>
+                                 @if($product->product_price_sale >= 1)<h5 class="detail-price"></h5>Price:<del style="color:red">{{$product->product_price}} EGP</del> {{$product->product_price_sale}} EGP</h5>@endif
+                                 @if($product->product_price_sale < 1)<h5 class="detail-price"></h5>Price:{{$product->product_price}}  EGP</h5>@endif
+                            </div>
+                        </div>
+                        <div class="cart-section">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-6 review">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-6">
+                                       <a href="{{route('addtocartt',['id'=>$product->id])}}" class="AddCart btn btn-info"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To Cart</a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                             @endforeach
                         </div>
                     </div>
@@ -143,8 +200,8 @@
             @foreach ($productchunk as $product)
             <div class="col-md-3 col-sm-3 col-xs-12">
                 <div class="slider-item">
-                    <div class="slider-image">
-                        <img src="{{asset('img/images.jpg')}}" class="img-responsive" alt="a" />
+                    <div class="slider-image" style="width:100%;height:100%">
+                        <img  src="{{asset('images/'.$product->images->toArray()[0]['img_name'])}}" class="img-responsive" alt="a" />
                         <div class="middle">
                             <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#Quikviewmodal-{{ $product->id }}" data-id="{{ $product->id }}">Quik Show</button>
                         </div>
@@ -154,8 +211,9 @@
                     <div class="slider-main-detail">
                         <div class="slider-detail">
                             <div class="product-detail">
-                                <h5>{{ $product->id }}</h5>
-                                <h5 class="detail-price">{{$product->product_price}}</h5>
+                                <h5>styel:{{ $product->style->style_name }}</h5>
+                                 @if($product->product_price_sale >= 1)<h5 class="detail-price"></h5>Price:<del style="color:red">{{$product->product_price}} EGP</del> {{$product->product_price_sale}} EGP</h5>@endif
+                                 @if($product->product_price_sale < 1)<h5 class="detail-price"></h5>Price:{{$product->product_price}}  EGP</h5>@endif
                             </div>
                         </div>
                         <div class="cart-section">
@@ -168,7 +226,7 @@
                                     <i class="fa fa-star-o" aria-hidden="true"></i>
                                 </div>
                                 <div class="col-md-6 col-sm-12 col-xs-6">
-                                    <a href="#" class="AddCart btn btn-info"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To Cart</a>
+                                       <a href="{{route('addtocartt',['id'=>$product->id])}}" class="AddCart btn btn-info"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Add To Cart</a>
                                 </div>
                             </div>
                         </div>
@@ -188,93 +246,56 @@
             </div>
             <div class="modal-body">
                 <div class="p_content">
-                        <input type="text" class="form-control" id="id" value="{{ $product->id }}" >
-                    <div class="row">
-                          <h4 class="text-left colmain"> MEN T_SHERT</h4>
-                          <div class="col-sm-4 ">
-                            <div class="divslideimg">
-                                <div class="numbertext">1 / 6</div>
-                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
-                              </div>
-                        
-                              <div class="divslideimg">
-                                <div class="numbertext">2 / 6</div>
-                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
-                              </div>
-                        
-                              <div class="divslideimg">
-                                <div class="numbertext">3 / 6</div>
-                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
-                              </div>
-                                
-                              <div class="divslideimg">
-                                <div class="numbertext">4 / 6</div>
-                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
-                              </div>
-                        
-                              <div class="divslideimg">
-                                <div class="numbertext">5 / 6</div>
-                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
-                              </div>
-                                
-                              <div class="divslideimg">
-                                <div class="numbertext">6 / 6</div>
-                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
-                              </div>
-                                
-                              <a class="prevlink" onclick="plusSlides(-1)">❮</a>
-                              <a class="nextlink" onclick="plusSlides(1)">❯</a>
-                        
-                              <div class="divproductdetails-container">
-                                <p id="divproductdetails"></p>
-                              </div>
-                        
-                              <div class="row">
-                                <div class="columnforproduct">
-                                  <img class="imgdownslide cursorproduct" src="{{asset('img/images.jpg')}}" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
+                    <div class="row"> 
+                         <div class="col-sm-4 ">
+                            <div class="carousel slide media-carousel" id="media">
+                              <div class="carousel-inner">
+                            @foreach ($product->images as $key => $image)
+                                <div class="item{{ $key == 0 ? ' active' : '' }}">              
+                                      <a class="thumbnail" href="#"><img alt="" src="{{asset('images/'.$image->img_name)}}"></a>
                                 </div>
-                                <div class="columnforproduct">
-                                  <img class="imgdownslide cursorproduct" src="{{asset('img/images.jpg')}}" style="width:100%" onclick="currentSlide(2)" alt="Trolltunga, Norway">
+                            @endforeach    
+                                <div class="item">
+                                 <a class="thumbnail" href="#"><img alt="" src="{{asset('img/images.jpg')}}"></a>
                                 </div>
-                                <div class="columnforproduct">
-                                  <img class="imgdownslide cursorproduct" src="{{asset('img/images.jpg')}}" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
-                                </div>
-                                <div class="columnforproduct">
-                                  <img class="imgdownslide cursorproduct" src="{{asset('img/images.jpg')}}" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
-                                </div>
-                                <div class="columnforproduct">
-                                  <img class="imgdownslide cursorproduct" src="{{asset('img/images.jpg')}}" style="width:100%" onclick="currentSlide(5)" alt="Nature and sunrise">
-                                </div>    
-                                <div class="columnforproduct">
-                                  <img class="imgdownslide cursorproduct" src="{{asset('img/images.jpg')}}" style="width:100%" onclick="currentSlide(6)" alt="Snowy Mountains">
+                                <div class="item">
+                                  <a class="thumbnail" href="#"><img alt="" src="{{asset('img/images.jpg')}}"></a>
                                 </div>
                               </div>
+                              <a data-slide="prev" href="#media" class="left carousel-control">‹</a>
+                              <a data-slide="next" href="#media" class="right carousel-control">›</a>
+                            </div>                          
+    
+                      
 
                           </div>
                 
                           <div class="col-sm-4 cente ctr">
-                            <p class='popprise text-left'>225 EGY <p>
-                            <p class="popdetails text-left"> details<p>
-                            <hr>
-                            <h6 class="text-left popprise">size:</h6>
-                            <div>
-                              <span class="btn btn-primary size"> M </span>
-                              <span class="btn btn-primary size"> L   </span>
-                              <span class="btn btn-primary size"> xm  </span>
-                              <span class="btn btn-primary size"> xxl </span>
-                              <span class="btn btn-primary size">xxxl </span>
-                            </div>
-                            <hr>
-                            <p class="text-left popdetails">Color</p>
+                            <p class='popprise text-left'>{{$product->product_price}}EGY <p>
+                           
+                            <hr>   
+                            <p class="text-left popdetails">Color-Size</p>
+                            @foreach($product->colors as $color)
+                                <p class="text-left popdetails">{{$color->color_name}}</p>
+                                 @foreach($color->sizes as $size)
+                                    <label class="checkbox-inline" style="font-size:.7em;"><input type="radio" name="size" value="{{$size->id}}">{{$size->size_name}}</label>
+                                @endforeach
+                                 <label style="font-size:.7em;"></label>Quantity:</label><input type="number" name="quan" style="width:2em; height:2em;">
+                            @endforeach
+                            <hr>   
+  
                             <div>
                               <span class="redd"></span>
                               <span class="bluee"></span>
                             </div>
                             <hr>
                             <p class="text-left prodmain popprise">PRODUCT INFORMATION:</p>
-                            <ul class="list text-justify ulsize">
-                              <li >First item</li>
-                              <li>Second item</li>
+                            <ul class="list text-justify ulsize" style="font-size:.7em">
+                                @if($product->product_price_sale >= 1)<li >Price:<del style="color:red">{{$product->product_price}} EGP</del> {{$product->product_price_sale}} EGP</li>@endif
+                              @if($product->product_price_sale < 1)<li ></li>Price:{{$product->product_price}}  EGP</h5>@endif
+                              <li >Price:{{$product->style->style_name}}</li>
+                              <li >Price:{{$product->product_desc}}</li>
+                            
                             </ul>
                           </div>
                           <div class="col-sm-4 right">
@@ -284,12 +305,19 @@
                               </p>
                               <p class="text-left small"> deliverd at </p>
                             </div>
-                            <a href="#" class="btn btn-success addtocart"> ADD TO CART</a>
-                            <p class="text-left small "> Sold BY :</p>
+                            <a href="{{route('addtocartt',['id'=>$product->id])}}" class="btn btn-success addtocart"> ADD TO CART</a>
+
+                            {{--  <a href="{{route('addtocartt',['id'=>$product->id])}}" class="AddCart btn btn-info"><i class="fa fa-shopping-cart btn btn-success addtocart" aria-hidden="true"></i> Add To Cart</a>  --}}
+                            
                           </div>
                           <!--......... end right.......-->
                       </div> 
                              <!--......... end row.......-->
+
+
+
+
+
                     <!--................-->
                   </div>
             
@@ -318,7 +346,15 @@
 @endsection('content')
 @section('script')
 <script>
-    var slideIndex = 1;
+$(document).ready(function() {
+  $('#media').carousel({
+    pause: true,
+    interval: false,
+  });
+});
+
+
+   /* var slideIndex = 1;
     showSlides(slideIndex);
     
     function plusSlides(n) {
@@ -345,6 +381,6 @@
       slides[slideIndex-1].style.display = "block";
       dots[slideIndex-1].className += " active";
       divproductdetailsText.innerHTML = dots[slideIndex-1].alt;
-    }
+    }*/
     </script>
  @endsection('script')

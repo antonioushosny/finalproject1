@@ -88,4 +88,13 @@ Route::get('images-upload', 'HomeController@imagesUpload');
 
 Route::post('images-upload', 'HomeController@imagesUploadPost')->name('images.upload');
 
-    
+
+
+
+
+Route::get('massages',['uses'=>"AdminController@getmassages",'as'=>'massages']);
+Route::get('deletemassage/{id}',['uses'=>"AdminController@deletemassage",'as'=>'deletemassage']);
+
+Route::get('contact',['uses'=>"Controller@getcontact",'as'=>'contactt']);
+Route::post('contact1',['uses'=>"Controller@postcontact",'as'=>'contact']);
+Route::get('about',['uses'=>"Controller@about",'as'=>'about']); 

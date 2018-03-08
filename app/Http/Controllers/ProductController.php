@@ -23,11 +23,11 @@ class ProductController extends Controller
     {
         $groups =Group::with('categories')->get();
         
-        /*if(!Auth::check()) 
-		{
-            dd('done');
-			//return redirect('welcome');
-		}*/
+        $products =Product::with('style')->with('images')
+        ->get();
+    ;
+        // dd($products);
+  
        //retrun categries of group
         $categories=DB::table('categories')
         ->join('categ_groups','categories.id','=','categ_groups.categ_id')
@@ -125,16 +125,17 @@ class ProductController extends Controller
         JOIN groups ON categ_groups.group_id=groups.id
         WHERE groups.group_name='woman'
         AND categories.categ_name='Dresses'*/
-        $products=DB::table('products')
-        ->join('styles','products.style_id','=','styles.id')
-        ->join('categories','categories.id','=','styles.categ_id')
-        ->join('categ_groups','categ_groups.categ_id','=','categories.id')
-        ->join('groups','groups.id','=','categ_groups.group_id')
-        ->select('products.product_desc AS desc','products.product_price AS price','products.product_price_sale AS sale','products.id AS id')
-        ->when($categ_name, function ($query) use ($group_name) {
-            return $query->where('groups.group_name', $group_name);
-        })
-        ->get();
+
+        // $products=DB::table('products')
+        // ->join('styles','products.style_id','=','styles.id')
+        // ->join('categories','categories.id','=','styles.categ_id')
+        // ->join('categ_groups','categ_groups.categ_id','=','categories.id')
+        // ->join('groups','groups.id','=','categ_groups.group_id')
+        // ->select('products.product_desc AS desc','products.product_price AS price','products.product_price_sale AS sale','products.id AS id')
+        // ->when($categ_name, function ($query) use ($group_name) {
+        //     return $query->where('groups.group_name', $group_name);
+        // })
+        // ->get();
         //return max pric and min price
         
 

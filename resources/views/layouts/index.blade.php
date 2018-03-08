@@ -29,7 +29,9 @@
         * {
             box-sizing: border-box;
         }
-        
+        .navbar-fixed-bottom, .navbar-fixed-top{
+            z-index:3;
+        }
         img {
             vertical-align: middle;
         }
@@ -120,10 +122,11 @@
     </style>
     <body>
         <!-- start header -->
+        <div class="navbar-fixed-top">
         <div class="container">
-                <div class="row">
+                <div class="row" style="background: #e6e6ff">
                         <div class="col-sm-4"> 
-                                <a class="logo" href="#"><img src="{{asset('img/logo.jpg')}}"></a>
+                                <a class="logo"  href="#"><img src="{{asset('img/logo.jpg')}}" class="wow bounceInLeft"></a>
                         </div>
                         <div class="col-sm-2">
                             <div class="check">
@@ -254,9 +257,9 @@
                                      </div>
                                 </a>
                             </li>
-                             <li><a href="#">Contact Us</a></li>
-                             <li><a href="#">About</a></li>
-                             <li><a href="#">Account</a></li>
+                             <li><a href="{{route('contactt')}}">Contact Us</a></li>
+                             <li><a href="{{route('about')}}">About</a></li>
+                            
                          </ul>
                          <!--<ul class="nav navbar-nav navbar-right">
                              <li class="dropdown">
@@ -299,6 +302,10 @@
                        </div>
                    </nav>
                 </div>
+                </div>
+                <br>
+                <br><br><br><br><br><br><br>
+
               <!--Login Modal user -->
               
               <div id="authentication" class="w3-modal">
@@ -475,11 +482,10 @@
                      <div class="media">
                          
                          <div class="media-body">
-                             <h4 class="media-heading">
-                                 programming
-                             </h4>
-                             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                             tempor
+                            <a href="https://www.googleplus.com/">	<li class="fa fa-google-plus fa-3x" style="padding: 10px"></li></a>
+	<a href="https://www.facebook.com/">	<li class="fa fa-facebook fa-3x" style="padding: 10px"></li></a>
+	<a href="https://www.twitter.com/"><li class="fa fa-twitter fa-3x" style="padding: 10px"></li></li></a>
+	<a href="https://www.youtube.com/"><li class="fa fa-youtube fa-3x" style="padding: 10px"></li></a>
                          </div>
                      </div>
                  </div>
@@ -501,6 +507,12 @@
             <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
             <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
             <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+            <script src="{{ asset('js/wow.min.js') }}"></script>
+            <script>
+    new WOW().init();
+ </script>
+            
+
  
     @yield('script')    
         

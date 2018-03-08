@@ -9,7 +9,7 @@ use Session;
 use App\Category;
 use App\Style;
 use App\Product;
-
+use App\Group;
 
 //use App\Http\Request;
 
@@ -48,14 +48,17 @@ function getaddtocart(Request $request,$id){
 }
 
 function shoppingcart(){
+
   if(!Session::has('cartt')){
 
-      return view('user.product.shoppingcart',['products'=> null]);
+    $groups =Group::with('categories')->get();
+      return view('user.product.shoppingcart',['products'=> null,'groups'=>$groups]);
   }
+  $groups =Group::with('categories')->get();
 
   $oldCartt=Session::get('cartt');
   $cart=new Cart($oldCartt);
-  return view('user.product.shoppingcart',['products'=> $cart->items,'totalPrice'=>$cart->totalPrice]);
+  return view('user.product.shoppingcart',['groups'=>$groups,'products'=> $cart->items,'totalPrice'=>$cart->totalPrice]);
 }
 
 public function getRemoveItem($id){
@@ -92,9 +95,10 @@ public function getcheckout(Request $request){
  // $users=Order::find(1)->User;
  $users=User::with('orders')->get();
 //dd($users);
-
+$groups =Group::with('categories')->get();
   if(!Session::has('cartt')){
-    return view('user.product.shoppingcart');
+    $groups =Group::with('categories')->get();
+    return view('user.product.shoppingcart',['groups'=>$groups]);
   }
 
   $oldCartt=Session::get('cartt');
@@ -143,7 +147,7 @@ public function getcheckout(Request $request){
   // $neworder->order_price=$request->$total;[]
   // $neworder->user_id=1;
 
-   return view('user.product.checkout',["total"=>$total,"users"=>$users]);
+   return view('user.product.checkout',['groups'=>$groups,"total"=>$total,"users"=>$users]);
     
    
 
@@ -182,7 +186,7 @@ $qu=$q['qty'];
 
  
  DB::table('order_details')->insert([
-  ['product_id' =>$product_id, 'order_id' =>$order_id,'order_details_quan' =>$qu, 'order_details_price' =>$price]
+  ['product_color_size_id' =>1, 'order_id' =>$order_id,'order_details_quan' =>$qu, 'order_details_price' =>$price]
 ]);
 
 

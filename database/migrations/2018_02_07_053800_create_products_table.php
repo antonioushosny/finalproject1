@@ -29,9 +29,13 @@ class CreateProductsTable extends Migration
             $table->foreign('mater_id')->references('id')->on('materials')
             ->onDelete('cascade')
             ->onUpdate('cascade');
+<<<<<<< HEAD
+           
+=======
             // $table->foreign('comp_id')->references('id')->on('sellers')
             // ->onDelete('cascade')
             // ->onUpdate('cascade');
+>>>>>>> af756aadcad135af9a5829ba4c6aa7757f8258e3
           
             $table->timestamps();
         });
