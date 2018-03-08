@@ -246,15 +246,22 @@
             </div>
             <div class="modal-body">
                 <div class="p_content">
+<<<<<<< HEAD
+=======
+                       
+>>>>>>> 7db1922f4bc4ab80c89b01af7b6212d316e23059
                     <div class="row"> 
                          <div class="col-sm-4 ">
                             <div class="carousel slide media-carousel" id="media">
                               <div class="carousel-inner">
+<<<<<<< HEAD
                             @foreach ($product->images as $key => $image)
                                 <div class="item{{ $key == 0 ? ' active' : '' }}">              
                                       <a class="thumbnail" href="#"><img alt="" src="{{asset('images/'.$image->img_name)}}"></a>
+=======
+                                <div class="item  active">               
+                                      <a class="thumbnail" href="#"><img alt="" src="{{asset('img/images.jpg')}}"></a>
                                 </div>
-                            @endforeach    
                                 <div class="item">
                                  <a class="thumbnail" href="#"><img alt="" src="{{asset('img/images.jpg')}}"></a>
                                 </div>
@@ -266,11 +273,73 @@
                               <a data-slide="next" href="#media" class="right carousel-control">›</a>
                             </div>                          
     
+                        <!-- <div class="divslideimg">
+                                <div class="numbertext">1 / 6</div>
+                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
+                              </div>
+                        
+                              <div class="divslideimg">
+                                <div class="numbertext">2 / 6</div>
+                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
+                              </div>
+                        
+                              <div class="divslideimg">
+                                <div class="numbertext">3 / 6</div>
+                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
+                              </div>
+                                
+                              <div class="divslideimg">
+                                <div class="numbertext">4 / 6</div>
+                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
+                              </div>
+                        
+                              <div class="divslideimg">
+                                <div class="numbertext">5 / 6</div>
+                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
+                              </div>
+                                
+                              <div class="divslideimg">
+                                <div class="numbertext">6 / 6</div>
+                                <img src="{{asset('img/images.jpg')}}" style="width:100%">
+                              </div>
+                                
+                              <a class="prevlink" onclick="plusSlides(-1)">❮</a>
+                              <a class="nextlink" onclick="plusSlides(1)">❯</a>
+                        
+                              <div class="divproductdetails-container">
+                                <p id="divproductdetails"></p>
+                              </div>
+                        
+                              <div class="row">
+                                <div class="columnforproduct">
+                                  <img class="imgdownslide cursorproduct" src="{{asset('img/images.jpg')}}" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
+                                </div>
+                                <div class="columnforproduct">
+                                  <img class="imgdownslide cursorproduct" src="{{asset('img/images.jpg')}}" style="width:100%" onclick="currentSlide(2)" alt="Trolltunga, Norway">
+>>>>>>> 7db1922f4bc4ab80c89b01af7b6212d316e23059
+                                </div>
+                            @endforeach    
+                                <div class="item">
+                                 <a class="thumbnail" href="#"><img alt="" src="{{asset('img/images.jpg')}}"></a>
+                                </div>
+                                <div class="item">
+                                  <a class="thumbnail" href="#"><img alt="" src="{{asset('img/images.jpg')}}"></a>
+                                </div>
+<<<<<<< HEAD
+                              </div>
+                              <a data-slide="prev" href="#media" class="left carousel-control">‹</a>
+                              <a data-slide="next" href="#media" class="right carousel-control">›</a>
+                            </div>                          
+    
                       
+=======
+                              </div>-->
+>>>>>>> 7db1922f4bc4ab80c89b01af7b6212d316e23059
 
                           </div>
                 
                           <div class="col-sm-4 cente ctr">
+<<<<<<< HEAD
                             <p class='popprise text-left'>{{$product->product_price}}EGY <p>
                            
                             <hr>   
@@ -284,6 +353,23 @@
                             @endforeach
                             <hr>   
   
+=======
+                            <p class='popprise text-left'>225 EGY <p>
+                            <p class="popdetails text-left"> details<p>
+                            <hr>   
+                            <p class="text-left popdetails">Color</p>
+                            <input type="radio" > yellow<br>
+                            <input type="radio" > Green <br>
+                            <hr>   
+                            <p class="text-left popdetails">Size</p> 
+                            <div>  
+                                <input type="radio" > M<br>
+                                <input type="radio" > L <br>
+                                <input type="radio" > xM<br>
+                                <input type="radio" > xxL <br>
+                            </div>
+                            
+>>>>>>> 7db1922f4bc4ab80c89b01af7b6212d316e23059
                             <div>
                               <span class="redd"></span>
                               <span class="bluee"></span>
