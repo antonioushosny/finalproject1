@@ -17,11 +17,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','address','phone'
+        'name', 'email', 'password','address','phone','is_admin'
     ];
     public function orders()
     {
         return $this->belongsTo('App\Order','user_id');
+    }
+    public function isAdmin()
+    {
+        return $this->is_admin; // this looks for an admin column in your users table
     }
 
     /**

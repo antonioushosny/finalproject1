@@ -12,7 +12,7 @@ class SizeTableSeeder extends Seeder
     public function run()
     {
         //
-        $colors=
+        $sizes=
         [
             [
                 'size_name'=>'S'
@@ -39,5 +39,8 @@ class SizeTableSeeder extends Seeder
                 'size_name'=>'5XL'
             ],
         ];
+        foreach ($sizes as $key => $value) {
+        	Size::create($value);
+		}
     }
 }

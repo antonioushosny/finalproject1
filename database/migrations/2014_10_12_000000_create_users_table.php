@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('address');
             $table->string('phone');
+            $table->boolean('is_admin');
             $table->rememberToken();
             $table->timestamps();
             
@@ -34,5 +35,9 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+    }
+    public function isAdmin()
+    {
+        return $this->is_admin; // this looks for an admin column in your users table
     }
 }

@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="{{ asset('toastr/toastr.min.css') }}"> 
   <link rel="stylesheet" href="{{ asset('css/tags.css') }}">
   <link rel="stylesheet" href="{{ asset('icheck/square/yellow.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
+
  @yield('style')
   @yield('header')
 </head>
@@ -46,11 +48,11 @@
 <ul style="margin-left: 1147px;
     margin-top: 4px;">
 <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:white">
                                         {{ Auth::guard('seller')->user()->name }} 
                                         <span class="caret"></span>
                                         </a>
-                                        <ul style="background-color: #708090" class="dropdown-menu" role="menu">
+                                        <ul style="background-color: white" class="dropdown-menu" role="menu">
                                             <li >
                                                 <a href="{{ route('logout') }}">
                                                                 <i class="fa fa-btn fa-sign-out"></i>Logout
@@ -71,15 +73,7 @@
     <section class="sidebar">
 
       <!-- Sidebar user panel -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Alexander Pierce</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
+      
       <!-- search form -->
 
       <form action="#" method="get" class="sidebar-form">
@@ -94,7 +88,7 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
+       
 
     
         <li class="treeview">
@@ -308,6 +302,13 @@
 
 <script type="text/javascript" src="{{ asset('toastr/toastr.min.js') }}"></script> 
 <script type="text/javascript" src="{{ asset('icheck/icheck.min.js') }}"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="{{ asset('js/wow.min.js') }}"></script>
+
+<script>
+ 	new WOW().init();
+ </script>
+
 
 @yield('script')
 </body>

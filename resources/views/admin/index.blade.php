@@ -32,6 +32,8 @@
                   </a>
 
                   <nav class="navbar navbar-static-top"></nav>
+
+                  
     
       
 
@@ -44,13 +46,6 @@
                               <section class="sidebar">
 
                   
-                                  <div class="user-panel">
-                                    <div class="pull-left image">
-                                      <img src="" class="img-circle" alt="User Image"> 
-                                      </div>
-                  
-                          
-                                  </div>
                   
 
                                   <form action="#" method="get" class="sidebar-form">
@@ -64,10 +59,11 @@
                                   </form>
 
                                   <ul class="sidebar-menu" data-widget="tree">
-                                    <li class="header">MAIN NAVIGATION</li>
-                                    <li class="header"><a href="{{route('showadmin')}}">Users</a></li>
-                                    <li class="header"><a href="{{route('showseller')}}">Sellers</a></li>
-                                    <li class="header"><a href="{{route('adminproducts')}}">Products</a></li>
+                                   
+                                    <li class="header"><a href="{{route('showusers')}}">Users</a></li>
+                                    
+                                    
+                                    
                                   </ul>
                     
 

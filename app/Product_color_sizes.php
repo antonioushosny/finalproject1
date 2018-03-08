@@ -24,5 +24,9 @@ class Product_color_sizes extends Pivot
     {
         return $this->belongsTo('App\Product_colors');
     }
+    public function orderDetails()
+    {
+        return $this->hasMany('App\OrderDetails','product_color_size_id');
+    }
 
 }

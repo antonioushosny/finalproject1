@@ -8,14 +8,25 @@ namespace App\Http\Controllers;
     use App\Product;
     class AdminController extends Controller
     {
+
+       
         public function getIndex(){
            
-              $users=User::all();
-              $arr=array('users'=>$users);
               
-              return view('admin.admin_show',$arr);
+              //$arr=array('users'=>$users);
+              
+              $sellers=Seller::all();
+              //$arr=array('sellers'=>$sellers);
+              return view('admin.sellers',compact('users','sellers'));
+            //return view('admin.admin_show',$arr);
+           }
+
+           public function sellerActive(Request $request)
+           {
+
            }
     
+           
            
            public function deleteuser($id){
         
@@ -29,11 +40,11 @@ namespace App\Http\Controllers;
     
          /////sellers
     
-         public function getsellers(){
+         public function getusers(){
            
-            $sellers=Seller::all();
-            $arr=array('sellers'=>$sellers);
-            return view('admin.sellers',$arr);
+            $users=User::all();
+            
+            return view('admin.users',compact('users'));
          }
     
          public function deleteseller($id){
@@ -42,26 +53,11 @@ namespace App\Http\Controllers;
             
        
             
-            return redirect('showseller');
+            return redirect('admin.sellers');
          }
     
     
-         //products
-         public function getproducts(){
-           
-            $products=Product::all();
-            $arr=array('products'=>$products);
-            return view('admin.admin_products',$arr);
-         }
-    
-         public function deleteproduct($id){
         
-            $products=Product::find($id)->delete();
-            
-       
-            
-            return redirect('adminproducts');
-         }
     
          public function adminsetting(){
         
@@ -74,6 +70,14 @@ namespace App\Http\Controllers;
            return view('admin.admin_setting',['product'=>$product,'user'=>$user,'seller'=>$seller]);
          }
     
+         public function editseller($id){
+          
+              $users=Seller::find($id);
+              
+         
+              
+              return view('seller.edit');
+           }
     }
     
 

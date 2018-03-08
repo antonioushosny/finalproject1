@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAboutUsTable extends Migration
+class AddVotesTwoProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateAboutUsTable extends Migration
      */
     public function up()
     {
-        Schema::create('about_us', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('con_type');
-            $table->text('con_value')->nullable(false);
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            //
+             $table->foreign('comp_id')->references('id')->on('sellers')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
         });
     }
 
@@ -28,6 +28,8 @@ class CreateAboutUsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('about_us');
+        Schema::table('products', function (Blueprint $table) {
+            //
+        });
     }
 }

@@ -37,9 +37,13 @@ public function login(Request $request) {
 						
 						'name' => $request->get ( 'username' ) 
 				] );
+				if(Auth::user()->is_admin==1)
+				{
+					return redirect('/admin');
+				}
 				return Redirect::back ();
 			} else {
-				Session::flash ( 'message', "Invalid Credentials88888 , Please try again." );
+				Session::flash ( 'message', "Invalid Credentials , Please try again." );
 				return Redirect::back ();
 			}
 		}
@@ -50,7 +54,7 @@ public function login(Request $request) {
 				$rules = array (
 					
 					'username' => 'required',
-					'password' => 'required' 
+					'password' => 'required'
 			);
 			$validator = Validator::make ( Input::all (), $rules );
 			if ($validator->fails ()) {
@@ -61,45 +65,11 @@ public function login(Request $request) {
 					//add col is_active
 					return redirect('seller')->with('name', $request->username);
 				  }
-				  else{
-					  
-					dd('your username and password are wrong.');
-				  }
+				  else {
+					Session::flash ( 'message', "Invalid Credentials , Please try again." );
+					return Redirect::back ();
 				}
-				  
-				// $name = $request->get('username');
-				// $seller = new Seller;
-				// // $seller->name     = Input::get('name');
-				// // $seller->email    = Input::get('email');
-				// // $seller->password = Hash::make(Input::get('password'));
-				// $seller = Seller::where('name','=',$name)->first();
-				// if($seller==null)
-				// {
-				// 	Session::flash ( 'message', "Invalid Credentials999999999 , Please try again." );
-				// 	return Redirect::back ();
-				// }
-				// else
-				// {
-				// 	//dd('seler');
-				// 	session ( [ 
-						
-					
-				// 				'name' => $request->get ( 'username' ) ,
-				// 				'id'=>$seller->id
-				// 		] );
-						
-
-				// 		$seller_id=Session::get('id');
-				// 		$comp_name=Session::get('name');
-				// 		//Session::set('seller', [ 'id' => $seller->id, 'name'=>$seller->name]);
-				// 		//Session::set('id', $seller->id);
-						
-						
-				// 		//Redirect::route('seller');
-				// 		return redirect('seller');
-						//
-						//Redirect::route('seller',array('seller_id' => $seller_id,'comp_name' => $comp_name));
-						//return view('seller.index');
+				}
 
 				
 			
@@ -115,7 +85,9 @@ public function login(Request $request) {
 			$rules = array (
 					'email' => 'required|unique:users|email',
 					'name' => 'required|unique:users|alpha_num|min:4',
-					'password' => 'required|min:6|confirmed' 
+					'password' => 'required|min:6|confirmed' ,
+					'phone'=>'required|min:11|numeric|min:11',
+					'address'=>'required|string|max::200'
 			);
 			$validator = Validator::make ( Input::all (), $rules );
 			if ($validator->fails ()) {
@@ -141,7 +113,7 @@ public function login(Request $request) {
 
 		$rules = array (
 			'email' => 'required|unique:sellers|email',
-			'name' => 'required|unique:sellers|alpha_num|min:4',
+			'name' => 'required|unique:sellers|alpha_num|min:4|max:255',
 			'password' => 'required|min:6|confirmed' 
 		);
 		$validator = Validator::make ( Input::all (), $rules );
@@ -158,7 +130,7 @@ public function login(Request $request) {
 			$seller->email = $request->get ( 'email' );
 			$seller->address = $request->get ( 'address' );
 			$seller->phone = $request->get ( 'phone' );
-			$seller->comp_id=1;
+			//$seller->comp_id=1;
 			$seller->password = Hash::make ( $request->get ( 'password' ) );
 			$seller->remember_token = $request->get ( '_token' );
 			

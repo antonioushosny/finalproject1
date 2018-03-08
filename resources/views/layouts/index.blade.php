@@ -347,8 +347,12 @@
                                           <form action="{{ route('login') }}" method="post">
                                               {{ csrf_field() }} <input type="hidden" name="redirurl"
                                                   value="{{ $_SERVER['REQUEST_URI'] }}">
-                                                  <input type="radio" name="choices" value="user" required>User<br>
+                                                  <span style="color: #009688;
+                                                        font-size: 15px;
+                                                        font-weight: 800;">Choose Login AS: &nbsp;</span>
+                                                  <input type="radio" name="choices" value="user" required>User &nbsp;&nbsp;
                                                     <input type="radio" name="choices" value="seller" >Seller<br>
+                                                    <hr>
                                                    <label><b>Username</b></label>
                                               <input name="username"
                                                   class="w3-input w3-border w3-margin-bottom" type="text"
@@ -387,9 +391,14 @@
                                       @endif
                                       <form action="{{ route('register')}} " method="POST" id="regForm">
                                           {{ csrf_field() }} <input type="hidden" name="redirurl"
-                                              value="{{ $_SERVER['REQUEST_URI'] }}"> 
-                                              <input type="radio" name="choices" value="user" required onclick="show1();">User<br>
-                                            <input type="radio" name="choices" value="seller" onclick="show2();">Seller<br>
+                                              value="{{ $_SERVER['REQUEST_URI'] }}">
+                                              <span style="color: #009688;
+                                                        font-size: 15px;
+                                                        font-weight: 800;">Choose Register AS: &nbsp;</span>
+                                                  <input type="radio" name="choices" value="user" required onclick="show1();">User &nbsp;&nbsp;
+                                                    <input type="radio" name="choices" value="seller" onclick="show2();">Seller<br>
+                                                    <hr> 
+                                             
                                           <label><b>Email</b></label>
                                           <input class="w3-input w3-border w3-margin-bottom" type="text"
                                               name="email" placeholder="Enter Email"

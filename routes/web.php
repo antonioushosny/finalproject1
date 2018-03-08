@@ -21,6 +21,9 @@ Auth::routes();
 Route::get ( '/',['uses' => 'HomeController@index','as' => 'product'] );
 
 Route::post ( '/login', 'MainController@login' )->name('login');
+Route::get ( '/login',function(){
+   return redirect ('/');
+} );
 Route::post ( '/register', 'MainController@register' )->name('register');
 Route::get ( '/logout', 'MainController@logout' )->name('logout');
 
@@ -47,6 +50,9 @@ Route::group(['middleware' => ['seller'],'prefix'=>'seller'], function () {
                 'as' => 'addproduct']);
     Route::post ('/showproduct/products',['uses'=>'ProductsController@store','as'=>'products']);
     Route::put ('/editproduct/{id}',['uses'=>'ProductsController@update','as'=>'editproduct']);
+    Route::get('/orderDetails',['uses'=>'SellerController@orderDetails']);
+    Route::post('/orderDetails',['uses'=>'SellerController@orderDetails','as'=>'orderDetails']);
+   
 });
 
 //////////////////////  Cart
@@ -55,23 +61,32 @@ Route::get('addtocartt/{id}',['uses'=>"CartController@getaddtocart",'as'=>'addto
 Route::get('shoppingcart',['uses'=>"CartController@shoppingcart",'as'=>'shoppingcart']);
 Route::get('remove/{id}',['uses'=>"CartController@getRemoveItem",'as'=>'remove']);
  Route::get('update/{id}',['uses'=>"CartController@getupdateItem",'as'=>'update']);
+
+ Route::group(['middleware' => ['web','checkout'],], function () {
 Route::get('checkout',['uses'=>"CartController@getcheckout",'as'=>'checkout']);
+ });
 
 
 ///////////////////////admin
-Route::get('showadmin',['uses'=>"AdminController@getIndex",'as'=>'showadmin']);
+
+ Route::group(['middleware' => ['web','admin'],'prefix'=>'admin'], function () {
+Route::get('/',['uses'=>"AdminController@getIndex",'as'=>'showadmin']);
+Route::get('/sellerActive',['uses'=>'AdminController@sellerActive']);
+Route::post('/sellerActive',['uses'=>'AdminController@sellerActive','as'=>'sellerActive']);
+
 
 Route::get('deleteuser/{id}',['uses'=>"AdminController@deleteuser",'as'=>'deleteuser']);
 
-Route::get('showseller',['uses'=>"AdminController@getsellers",'as'=>'showseller']);
+Route::get('showusers',['uses'=>"AdminController@getusers",'as'=>'showusers']);
 
 Route::get('deleteseller/{id}',['uses'=>"AdminController@deleteseller",'as'=>'deleteseller']);
+Route::get('editseller/{id}',['uses'=>"AdminController@editseller",'as'=>'editseller']);
 
-Route::get('adminproducts',['uses'=>"AdminController@getproducts",'as'=>'adminproducts']);
 
-Route::get('deleteadminprodect/{id}',['uses'=>"AdminController@deleteproduct",'as'=>'deleteadminprodect']);
+
 
 Route::get('adminstting',['uses'=>"AdminController@adminsetting",'as'=>'adminstting']);
+ });
 
 
 

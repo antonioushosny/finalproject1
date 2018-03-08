@@ -38,10 +38,7 @@ class Product extends Model
     {
         return $this->belongsToMany('App\StyleDetails','product_style_details','product_id','style_details_id');
     }
-    public function orderDetails()
-    {
-        return $this->hasMany('App\OrderDetails','product_id');
-    }
+   
     public function images()
     {
         return $this->morphMany('App\Media','media');
