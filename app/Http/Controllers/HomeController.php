@@ -28,12 +28,12 @@ class HomeController extends Controller
         
         // $product=array();
 
-      
-            $products=Product::all();
+            $groups =Group::with('categories')->get();
+            $products= Product::with('style')->get();  
 
             //$lastproduct=Product::find(1);
             // $product->products->get();
-            return view('welcome',['products'=>$products]);
+            return view('welcome',['groups'=>$groups,'products'=>$products]);
            
     }
 
