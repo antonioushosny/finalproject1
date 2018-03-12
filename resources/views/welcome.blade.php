@@ -248,22 +248,26 @@
                 <div class="p_content">
                     <div class="row"> 
                          <div class="col-sm-4 ">
-                            <div class="carousel slide media-carousel" id="media">
+                            <div class="carousel slide media-carousel" id="media{{$product->id}}">
                               <div class="carousel-inner">
                             @foreach ($product->images as $key => $image)
                                 <div class="item{{ $key == 0 ? ' active' : '' }}">              
                                       <a class="thumbnail" href="#"><img alt="" src="{{asset('images/'.$image->img_name)}}"></a>
                                 </div>
                             @endforeach    
+<<<<<<< HEAD
                                 <div class="item">
                                  <a class="thumbnail" href="#"><img alt="" src="{{asset('img/images.jpg')}}"></a>
                                 </div>
                                 <div class="item">
                                   <a class="thumbnail" href="#"><img alt="" src="{{asset('img/images.jpg')}}"></a>
                                 </div>
+=======
+                               
+>>>>>>> bc8f74c9256ecf6955d9d05fe2b305312f6d219e
                               </div>
-                              <a data-slide="prev" href="#media" class="left carousel-control">‹</a>
-                              <a data-slide="next" href="#media" class="right carousel-control">›</a>
+                              <a data-slide="prev" href="#media{{$product->id}}" class="left carousel-control">‹</a>
+                              <a data-slide="next" href="#media{{$product->id}}" class="right carousel-control">›</a>
                             </div>                          
     
                       
