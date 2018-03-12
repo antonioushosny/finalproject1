@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Color;
 use App\Category;
 use App\Style;
+use App\Group;
 use App\Product;
 use App\Size;
 use Auth;

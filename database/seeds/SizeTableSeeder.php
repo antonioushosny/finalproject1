@@ -38,6 +38,7 @@ class SizeTableSeeder extends Seeder
             [
                 'size_name'=>'5XL'
             ],
+            
         ];
         foreach ($sizes as $key => $value) {
         	Size::create($value);

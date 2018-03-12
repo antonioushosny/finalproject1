@@ -15,7 +15,15 @@
   <link rel="stylesheet" href="{{ asset('toastr/toastr.min.css') }}"> 
   <link rel="stylesheet" href="{{ asset('css/tags.css') }}">
   <link rel="stylesheet" href="{{ asset('icheck/square/yellow.css') }}">
+<<<<<<< HEAD
   <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
+=======
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+
+>>>>>>> d27ebbfe66574657bc3b17df458d0ad9e5eaab21
 
  @yield('style')
   @yield('header')
@@ -30,7 +38,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>Seller</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -73,7 +81,13 @@
     <section class="sidebar">
 
       <!-- Sidebar user panel -->
-      
+      <div class="user-panel">
+        
+        <div class="pull-left info">
+          <p>{{ Auth::guard('seller')->user()->name }} </p>
+        </div>
+        <br>
+      </div>
       <!-- search form -->
 
       <form action="#" method="get" class="sidebar-form">
@@ -90,185 +104,25 @@
       <ul class="sidebar-menu" data-widget="tree">
        
 
-    
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Man</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ route('showproduct',array('categ_name'=>'Shirts','group_name'=>'Men')) }}"><i class="fa fa-circle-o"></i> Shirts</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Polos</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> T-Shirts</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> jeans&Pants</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>shorts</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Swimwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Underwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Sleepwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> jackets,Coats&Hoodies</a></li>
-
-          </ul>
-        </li>
+        @foreach($groups as $group)
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-pie-chart"></i>
+              <span>{{$group->group_name}}</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+            @foreach($group->categories as $category )
+              <li><a href="{{ route('showproduct',array('categ_name'=>$category->categ_name,'group_name'=>$group->group_name)) }}"><i class="fa fa-circle-o"></i> {{$category->categ_name}}</a></li>
+            @endforeach
+            </ul>
+          </li>
+        @endforeach
 
 
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-laptop"></i>
-            <span>Woman</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ route('showproduct',array('categ_name'=>'Dresses','group_name'=>'Woman')) }}"><i class="fa fa-circle-o"></i> Dresses</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> jumpsuits</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Tops</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Jeans & Pants</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Leggings</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> skirts</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Swimwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Lingerie</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Sleepwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Cardigans & Kimonos</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Jackets&Coats</a></li>
-          </ul>
-        </li>
-
-
-
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Kides-boys 0-3</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-             <li><a href="#"><i class="fa fa-circle-o"></i> Tops</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Pants</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Underwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Blankets& Throws</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Swimwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Sportswear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Sleepswear</a></li>
-          </ul>
-        </li>
-
-
-
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-table"></i> <span>Kides-boys 3-6</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-             <li><a href="#"><i class="fa fa-circle-o"></i> Tops</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Pants</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Underwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Shorts</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Sleepwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Jackets & Coats</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Swimwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Suits</a></li>
-          </ul>
-        </li>
-
-
-
-
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-table"></i> <span>Kides-boys 6-12</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Tops</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Pants</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Underwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Shorts</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Sleepwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Jackets & Coats</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Swimwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Sportswear</a></li>
-
-
-          </ul>
-        </li>
-
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Kides-girls 0-3</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Towels</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Underwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Sleepwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Blankets & Throws</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Tops</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Baby Clothes & Shoes</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Jackets & Coats</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Pants</a></li>
-
-          </ul>
-        </li>
-
-
-
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-table"></i> <span>Kides-girls  3-6</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Tops</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Underwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Pants</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Dresses</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Skirts</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Jackets & Coats</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Sleepwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Shorts</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Shorts</a></li>
-
-
-          </ul>
-        </li>
-
-
-
-
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-table"></i> <span>Kides-girls 6-12</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Tops</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Underwear </a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Pants</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Dresses</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Jackets & Coats</a></li>
-            <li><a href="#l"><i class="fa fa-circle-o"></i> Skirts </a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Shorts</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Sleepwear</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>  Jumpsuits, Rompers</a></li>
-
-          </ul>
-        </li>     
+        
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -276,7 +130,9 @@
 
 <div class="content-wrapper" style="padding:2em">
 
+          
 @yield('content')
+
 
 </div>
 

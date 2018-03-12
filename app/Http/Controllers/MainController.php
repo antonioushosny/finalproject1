@@ -130,7 +130,14 @@ public function login(Request $request) {
 			$seller->email = $request->get ( 'email' );
 			$seller->address = $request->get ( 'address' );
 			$seller->phone = $request->get ( 'phone' );
+<<<<<<< HEAD
 			//$seller->comp_id=1;
+=======
+<<<<<<< HEAD
+			//$seller->comp_id=1;
+=======
+>>>>>>> af756aadcad135af9a5829ba4c6aa7757f8258e3
+>>>>>>> d27ebbfe66574657bc3b17df458d0ad9e5eaab21
 			$seller->password = Hash::make ( $request->get ( 'password' ) );
 			$seller->remember_token = $request->get ( '_token' );
 			

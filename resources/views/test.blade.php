@@ -1,3 +1,4 @@
+hellow
 <?php
-print_r($materials);
+echo $id;
 ?>

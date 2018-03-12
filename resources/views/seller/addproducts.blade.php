@@ -10,22 +10,15 @@
 </style>
 @endsection
 @section('content')
+<div id="messages"></di>
 <h1 class="text-center">Add Product:</h1>
-<form  action="{{ route('storeproduct') }}" enctype="multipart/form-data" method="POST" class="form-horizontal" onkeypress="return event.keyCode != 13;">
-
+<form  action="{{ route('storeproduct') }}" id="add-form" enctype="multipart/form-data" method="POST" class="form-horizontal" onkeypress="return event.keyCode != 13;">
+  
   {{ csrf_field() }}
 
-   {{--  @foreach($items as $item)
-      <h1> {{$item->product_serial_num}}</h1>
-        @foreach($item->colors as $color)
-          <div style="background-color:{{$color->color_name}}; width:10%"> {{$color->color_name}}</div>
-          @foreach($color->sizes as $size)
-            <span style="background-color:{{$color->color_name}}; color:white"> {{$size->size_name}}</span>
-          @endforeach
-        @endforeach                    
-  @endforeach  --}}
+  
  
-
+<input type="hidden" value="{{Auth::guard('seller')->user()->id}}" name="comp_id">
   <div class="row">
   
     <div class="col-md-12">
@@ -44,13 +37,6 @@
                       <option value={{$style->id}}>{{$style->style_name}}</option>
                     @endforeach
                   </select>
-              
-                  {{-- <input class="form-control" onchange="myFunction()" id="styl"  list="style" name="style"  placeholder="Enter style For Product">
-                   <datalist id="style">
-                   @foreach($styles as $style)
-                      <option value={{$style->id}}>{{$style->style_name}}</option>
-                    @endforeach
-                  </datalist> --}}
                 </div>
               </div>
             </div>
@@ -82,7 +68,7 @@
               <div class="form-group">
                 <label class="control-label col-sm-2" for="price">Price:</label>
                 <div class="col-sm-10">
-                  <input type="number" class="form-control" id="price" name="product_price" placeholder="Enter price For Product" required  min="0"  step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$" onblur="this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'">
+                  <input type="number" class="form-control" id="price" name="product_price" placeholder="Enter price For Product" required  min="0"  step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$">
                 </div>
               </div>
             </div>
@@ -103,7 +89,7 @@
               <div class="form-group">
                 <label class="control-label col-sm-2" for="sale">Sale:</label>
                 <div class="col-sm-10">
-                  <input type="number" class="form-control" id="sale" name="product_price_sale" placeholder="Enter sale For Product" required min="0"  step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$" onblur="this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'">
+                  <input type="number" class="form-control" id="sale" name="product_price_sale" placeholder="Enter sale For Product" min="0"  step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$">
                 </div>
               </div>      
                 <div class="form-group">
@@ -134,8 +120,9 @@
    
   </div>
   <!-- for dresses and shirts -->
-  {{$categ_name}}
-  @if($categ_name == "Shirts") 
+  {{--  {{$categ_name}}  --}}
+
+  @if($categ_name == "Shirts" or $categ_name == "Dresses") 
   <div class="row" id="shirts">
     <div class="col-md-12">
       <div class="panel panel-warning panel-shadow">
@@ -250,7 +237,7 @@
               </div>
             </div>
             <div class="pull-right ">
-              <input type="submit" value="submit" class="btn btn-success csenter" width="100%">
+              <input type="submit" id="storeproduct" value="submit" class="btn btn-success csenter" width="100%">
             </div>
           </div>
             
@@ -272,18 +259,38 @@
 
 <script>
 
-    $('#style').change(function() {
+$("#add-form").submit(function(){
+    formulario =  $("#add-form");
+      url =  "http:://MyDomin/sendContacto";
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: formulario.serialize()
+        })
+        .done(function( response ) {
+            msg = ' <div class="alert alert-success" role="alert">'+arrMsgs[lang]["message_send"]+'</div>';
+            $("#messages").append(msg);
+        });
+})
+
+
+{{--  $('form').ajaxForm(function() 
+
+   {
+
+    alert("Uploaded SuccessFully");
+
+   });  --}}
+
+    {{--  $('#style').change(function() {
         if ($(this).val() === '1') {
             alert("hjgjhghjg");
              $("#shirts").append('<b>Appended text</b>')
         }
-    });
+    });  --}}
 
 
-  $('form').ajaxForm(function() 
-   {
-    alert("Uploaded SuccessFully");
 
-   }); 
+</script>
 </script>
 @endsection

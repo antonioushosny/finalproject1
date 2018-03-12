@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth;
 use App\Product;
 use App\Product_colors;
+use App\Product_style_details;
 use App\Company;
 use App\Category;
 use App\Group;
@@ -29,29 +31,19 @@ class ProductsController extends Controller
     public function index($categ_name,$group_name)
     { 
 //   dd($categ_name);
-      
-      
-        $products= Product::with('style')->get();
+// $products= Product::with(['style'=>function($query)use ($categ_name){
+//     $query->with(['category'=>function($query2) use ($categ_name){
+//         $query2->where('categ_name','like', 'Shirts');
+//     }]);
+// }])->get();
 
-     
-    //    $products= DB::table('materials')
-    //    ->join('products','products.mater_id','=','materials.id')
-    //    ->join('styles','styles.id','=','products.style_id')
-    //    ->join('categories','categories.id','=','styles.categ_id')
-    //    ->join('categ_groups','categories.id','=','categ_groups.categ_id')
-    //    ->join('groups','groups.id','=','categ_groups.group_id')
-    //    ->select('products.product_serial_num AS serial','products.product_desc AS desc',
-    //    'products.product_price AS price','products.product_price_sale AS sale',
-    //    'styles.style_name AS style','products.id','products.updated_at AS update','materials.mater_name AS material')
-    
-       
-        
-    //    ->get();
-     
-        return view('seller.showProducts',compact('products','categ_name','group_name',
+
+        $products= Product::with('style')->get();        
+        $groups =Group::with('categories')->get();
+
+        return view('seller.showProducts',compact('groups','products','categ_name','group_name',
         'styles','materials'));
         
-        //return view('test',compact('pro'));
     }
 
     /**
@@ -59,33 +51,10 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create($categ_name,$group_name)
     {
 
-     dd($request);
-        request()->validate([
-            'product_image' => 'required',
 
-        ]);
-
-
-        foreach ($request->file('product_image') as $key => $value) {
-            $imageName = time(). $key . '.' . $value->getClientOriginalExtension();
-            $value->move(public_path('images'), $imageName);
-        }
-
-
-
-        return response()->json(['success'=>'Images Uploaded Successfully.']);
-
-    
-      //Product::create($request->all());
-      //$pro->save();
-       return redirect()->route('addproduct');
-           
-    }
-    public function stylesAndMater($categ_name,$group_name)
-    {
         $materials=Material::all();
  
         $styles=DB::table('styles')
@@ -113,13 +82,17 @@ class ProductsController extends Controller
         ->select('id','style_details.style_details_value AS occassion')
         ->where('style_details.style_details_type','Occassion')
         ->get();
-        $sizes = Size::all();
+        $sizes  = Size::all();
         $colors = Color::all();
+        $groups = Group::with('categories')->get();
         //$productsss =Product::all();
         //$items = Product::with('colors')->get();
 
-       return view('seller.addproducts',compact('colors','sizes','styles','materials','length_values','sleeve_values','neck_values','occassion_values','categ_name','group_name'));
+       return view('seller.addproducts',compact('groups','colors','sizes','styles','materials','length_values','sleeve_values','neck_values','occassion_values','categ_name','group_name'));
+    
+           
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -141,14 +114,18 @@ class ProductsController extends Controller
             $product->product_price = $request->product_price;
             $product->product_serial_num = $request->product_serial_num;
             $product->product_desc = $request->product_desc;
+            if($request->has('tag_word')){
+            $product->tag_word = $request->tag_word;
+            }
+            if($request->has('product_price_sale'))
+            {
             $product->product_price_sale = $request->product_price_sale;
+            }
             $product->mater_id = $request->mater_id;
-            $product->comp_id = 1;
+            $product->comp_id = $request->comp_id;  
             $product->save();
 
-            $tags=new Tag();
-            $tags->tag_word = $request->tag_word;
-            $tags->product_id = $product;
+           
     
             $product_colors =new Product_colors();
             $product_colors->product_id = $product->id;
@@ -173,9 +150,7 @@ class ProductsController extends Controller
             foreach ($request->file('product_image') as $key => $value) {
 
                 $imageName = time(). $key . '.' . $value->getClientOriginalExtension();
-    
                 $value->move(public_path('images'), $imageName);
-    
                 $media =new Media();
                 $media->img_name = $imageName;
                 $media->media_id = $product->id;
@@ -183,14 +158,36 @@ class ProductsController extends Controller
                 $media->save();
     
             }
-        }   
+        }
         
-            // dd($media);
+        if($request->has('sleeve'))
+        {
+            $product_style_details = new Product_style_details();
+            $product_style_details->product_id = $product->id;
+            $product_style_details ->style_details_id = $request->sleeve;
+            $product_style_details->save();
+
+            $product_style_details = new Product_style_details();
+            $product_style_details->product_id = $product->id;
+            $product_style_details ->style_details_id = $request->length;
+            $product_style_details->save();
+
+            $product_style_details = new Product_style_details();
+            $product_style_details->product_id = $product->id;
+            $product_style_details ->style_details_id = $request->neck;
+            $product_style_details->save();
+
+            $product_style_details = new Product_style_details();
+            $product_style_details->product_id = $product->id;
+            $product_style_details ->style_details_id = $request->occassion;
+            $product_style_details->save();
+        }
+            
             // return response()->json($product);
-        // }
- 
+
+ return Redirect::back();
        
-        return response()->json(['success'=>'done']);
+        // return response()->json(['success'=>'done']);
  
     }
 
@@ -202,9 +199,50 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,$categ_name,$group_name)
     {
-           
+       
+        // dd($products);
+        
+        $product= Product::with('style')->with('colors')->where('id',$id)->get();
+    // dd($product[0]);
+        $style_details= Product::with('styleDetails')->where('id',$id)->get();
+        
+        $materials=Material::all();
+ 
+        $styles=DB::table('styles')
+        ->join('categories','styles.categ_id','=','categories.id')
+        ->select('styles.id','styles.style_name AS style_name')
+        ->where('categories.categ_name',$categ_name)
+        ->get();
+
+        $length_values=DB::table('style_details')
+        ->select('id','style_details.style_details_value AS length')
+        ->where('style_details.style_details_type','Length')
+        ->get();
+
+        $neck_values=DB::table('style_details')
+        ->select('id','style_details.style_details_value AS neck')
+        ->where('style_details.style_details_type','Neck Style')
+        ->get();
+
+        $sleeve_values=DB::table('style_details')
+        ->select('id','style_details.style_details_value AS sleeve')
+        ->where('style_details.style_details_type','Sleeve Length')
+        ->get();
+
+        $occassion_values=DB::table('style_details')
+        ->select('id','style_details.style_details_value AS occassion')
+        ->where('style_details.style_details_type','Occassion')
+        ->get();
+        $sizes  = Size::all();
+        $colors = Color::all();
+        $groups = Group::with('categories')->get();
+        //$productsss =Product::all();
+        //$items = Product::with('colors')->get();
+
+       return view('seller.editproducts',compact('product','style_details','groups','colors','sizes','styles','materials','length_values','sleeve_values','neck_values','occassion_values','categ_name','group_name'));
+    
          
     }
 
@@ -221,6 +259,41 @@ class ProductsController extends Controller
             $product = Product::findOrFail($id);
             $product->update($request->all());
             return 'success';
+
+            $product = Product::findOrFail($id);
+            $product->style_id = $request->style_id;
+            $product->product_price = $request->product_price;
+            $product->product_serial_num = $request->product_serial_num;
+            $product->product_desc = $request->product_desc;
+            if($request->has('tag_word')){
+            $product->tag_word = $request->tag_word;
+            }
+            if($request->has('product_price_sale'))
+            {
+            $product->product_price_sale = $request->product_price_sale;
+            }
+            $product->mater_id = $request->mater_id;
+            $product->comp_id = $request->comp_id;  
+            $product->save();
+
+
+        if($request->hasFile('product_image')){
+            foreach ($request->file('product_image') as $key => $value) {
+
+                $imageName = time(). $key . '.' . $value->getClientOriginalExtension();
+                $value->move(public_path('images'), $imageName);
+                $media =new Media();
+                $media->img_name = $imageName;
+                $media->media_id = $product->id;
+                $media->media_type = 'App\Product';
+                $media->save();
+    
+            }
+        }
+            
+            // return response()->json($product);
+
+ return Redirect::back();
 
     }
   
